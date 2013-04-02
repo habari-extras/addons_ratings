@@ -44,7 +44,7 @@ SQL;
 	public function action_block_content_ratings( $block, $theme )
 	{
 		$post_id = intval($theme->post->id);
-		$block->average_rating = 20 * DB::get_value('SELECT AVG(rating) FROM {ratings} WHERE post_id = :post_id', array('post_id' => $post_id));
+		$block->average_rating = round(20 * DB::get_value('SELECT AVG(rating) FROM {ratings} WHERE post_id = :post_id', array('post_id' => $post_id)));
 		$count = DB::get_value('SELECT count(rating) FROM {ratings} WHERE post_id = :post_id', array('post_id' => $post_id));
 		$pcts = DB::get_keyvalue('SELECT rating, COUNT(*) as rating_count FROM {ratings} WHERE post_id = :post_id GROUP BY rating', array('post_id' => $post_id));
 		for($z = 1;$z <=5;$z++) {
@@ -57,6 +57,11 @@ SQL;
 		else {
 			$block->your_rating = DB::get_value('SELECT COALESCE(rating,0) FROM {ratings} WHERE post_id = :post_id AND ip = :ip', array('post_id' => $post_id, 'ip' => $ip = sprintf( '%u', crc32( $_SERVER['REMOTE_ADDR'] ) )));
 		}
+	}
+
+	public function filter_post_rating($rating, $post)
+	{
+		return round(20 * DB::get_value('SELECT AVG(rating) FROM {ratings} WHERE post_id = :post_id', array('post_id' => $post->id)));
 	}
 
 	public function action_init()
