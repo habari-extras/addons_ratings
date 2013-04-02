@@ -48,7 +48,7 @@ SQL;
 		$count = DB::get_value('SELECT count(rating) FROM {ratings} WHERE post_id = :post_id', array('post_id' => $post_id));
 		$pcts = DB::get_keyvalue('SELECT rating, COUNT(*) as rating_count FROM {ratings} WHERE post_id = :post_id GROUP BY rating', array('post_id' => $post_id));
 		for($z = 1;$z <=5;$z++) {
-			$pcts[(string)$z] = isset($pcts[$z]) ? 100 * $count / intval($pcts[$z]) : 0;
+			$pcts[(string)$z] = isset($pcts[$z]) ? 100 * intval($pcts[$z]) / $count : 0;
 		}
 		$block->rating_pct = $pcts;
 		if(User::identify()->loggedin) {
