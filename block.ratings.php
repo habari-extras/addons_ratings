@@ -7,11 +7,11 @@
 			<div style="margin-left:55px;" data-average-rating="<?php echo $content->average_rating; ?>">
 				<?php
 				for ($z = 0; $z < 5; $z++):
-					if ( $content->average_rating < $z * 20 || 0 == $content->average_rating) {
+					if ( $content->average_rating <= $z * 20 || 0 == $content->average_rating) {
 						$class1 = '';
 						$class2 = 'zero';
 					}
-					elseif ( $content->average_rating < $z * 20 + 10 ) {
+					elseif ( $content->average_rating > $z * 20 && $content->average_rating < $z * 20 + 10 ) {
 						$class1 = '';
 						$class2 = 'fifty';
 					}
