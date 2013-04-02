@@ -54,7 +54,7 @@ SQL;
 			$block->your_rating = DB::get_value('SELECT COALESCE(rating,0) FROM {ratings} WHERE post_id = :post_id AND user_id = :user_id', array('post_id' => $post_id, 'user_id' => User::identify()->id));
 		}
 		else {
-			$block->your_rating = DB::get_value('SELECT COALESCE(rating,0) FROM {ratings} WHERE post_id = :post_id AND ip = :ip', array('post_id' => $post_id, 'ip' => $ip = sprintf( '%u', ip2long( $_SERVER['REMOTE_ADDR'] ) )));
+			$block->your_rating = DB::get_value('SELECT COALESCE(rating,0) FROM {ratings} WHERE post_id = :post_id AND ip = :ip', array('post_id' => $post_id, 'ip' => $ip = sprintf( '%u', crc32( $_SERVER['REMOTE_ADDR'] ) )));
 		}
 	}
 
@@ -75,7 +75,7 @@ SQL_SET;
 			'rating' => $_POST['rating'],
 			'updated' => time(),
 			'user_id' => User::identify()->loggedin ? User::identify()->id : 0,
-			'ip' => sprintf( '%u', ip2long( $_SERVER['REMOTE_ADDR'] ) ),
+			'ip' => sprintf( '%u', crc32( $_SERVER['REMOTE_ADDR'] ) ),
 		));
 
 		$ar = new AjaxResponse(200, 'Your rating has been recorded.');
