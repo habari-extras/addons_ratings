@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pluggable type="plugin">
+	<name>Addons Ratings</name>
+	<license url="http://www.apache.org/licenses/LICENSE-2.0.html">Apache Software License 2.0</license>
+
+	<author url="http://owenw.com/">Owen Winkler</author>
+
+	<version>1.0</version>
+	<url>http://redalt.com/</url>
+	<description><![CDATA[Supply ratings for addons.]]></description>
+
+	<copyright>2013</copyright>
+
+	<guid>d55fefc7-711a-4579-addd-b72278cf4562</guid>
+
+</pluggable>
